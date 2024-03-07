@@ -1,5 +1,6 @@
 ﻿using BetterStamina;
 using HarmonyLib;
+using System;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -54,15 +55,15 @@ internal static class GeneralStaminaPatches
         return returnStamina;
     }
 
-    [HarmonyPatch(typeof(Player), "UpdateStats")]
+    [HarmonyPatch(typeof(Player), "UpdateStats", new Type[] { typeof(float) })]
     [HarmonyPrefix]
     private static void UpdateStats_Prefix(Player __instance, float dt, SEMan ___m_seman, bool ___m_wallRunning, float ___m_staminaRegen, float ___m_stamina, float ___m_staminaRegenTimer)
     {
         UpdateEncumberedStaminaDrain(__instance);
 
-        __instance.m_staminaRegenTimeMultiplier = __instance.GetCurrentWeapon() != null ? BetterStaminaPlugin.staminaRegenRateMultiplierWithWeapons.Value : BetterStaminaPlugin.staminaRegenRateMultiplier.Value;
+        __instance.m_staminaRegenTimeMultiplier = __instance.GetCurrentWeapon() != null && !__instance.GetCurrentWeapon().Equals(__instance.m_unarmedWeapon.m_itemData) ? BetterStaminaPlugin.staminaRegenRateMultiplierWithWeapons.Value : BetterStaminaPlugin.staminaRegenRateMultiplier.Value;
         __instance.m_staminaRegenDelay = BetterStaminaPlugin.staminaRegenDelay.Value;
-
+        
         if (BetterStaminaPlugin.enableStaminaRegenLogging != null && BetterStaminaPlugin.enableStaminaRegenLogging.Value)
         {
             CalculateNewStamina(__instance, ___m_wallRunning, ___m_staminaRegen, ___m_stamina, ___m_seman, ref ___m_staminaRegenTimer, dt);

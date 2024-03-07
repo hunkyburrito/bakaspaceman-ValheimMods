@@ -12,7 +12,7 @@ internal static class SkillPatches
     private static float defaultSneakStaminaDrain = 0f;
     private static float defaultStaminaUsage = 0f;
     private static float defaultJumpStaminaUsage = 0f;
-
+    
     [HarmonyPatch(typeof(Player), "OnSneaking")]
     [HarmonyPrefix]
     private static void OnSneaking_Prefix(Player __instance, Skills ___m_skills)
@@ -132,7 +132,7 @@ internal static class SkillPatches
         }
     }
 
-    [HarmonyPatch(typeof(Attack), "GetStaminaUsage")]
+    [HarmonyPatch(typeof(Attack), "GetAttackStamina")]
     [HarmonyPrefix]
     private static bool GetStaminaUsage_Prefix(Attack __instance, Humanoid ___m_character, float ___m_attackStamina, ItemDrop.ItemData ___m_weapon, ref float __result)
     {
@@ -168,7 +168,21 @@ internal static class SkillPatches
         // Skip original function
         return false;
     }
-
+    [HarmonyPatch(typeof(ItemDrop.ItemData), "GetDrawStaminaDrain")]
+    [HarmonyPostfix]
+    private static void GetDrawStaminaDrain_Postfix(ItemDrop.ItemData.SharedData ___m_shared , ref float __result)
+    {
+        float weaponStaminaDrain =  ___m_shared.m_attack.m_drawStaminaDrain;
+        EasingFunctions.Function easeFunc = EasingFunctions.GetEasingFunction(EasingFunctions.Ease.EaseOutSine);
+        float interpFactor = easeFunc(1f, BetterStaminaPlugin.bowMaxSkillHoldStaminaCost.Value, Player.m_localPlayer.GetSkillFactor(___m_shared.m_skillType));
+        float newWeaponStaminaDrain = weaponStaminaDrain * interpFactor;
+        
+        __result = newWeaponStaminaDrain;
+        
+        if (BetterStaminaPlugin.enableSkillStaminaLogging != null && BetterStaminaPlugin.enableSkillStaminaLogging.Value)
+            BetterStaminaPlugin.DebugLog($"BowHoldStamina: Usage change: {weaponStaminaDrain} - {newWeaponStaminaDrain}; Mathf.Lerp: {Mathf.Lerp(1f, BetterStaminaPlugin.bowMaxSkillHoldStaminaCost.Value, Player.m_localPlayer.GetSkillFactor(___m_shared.m_skillType))}; Custom: {interpFactor}; skill: {Player.m_localPlayer.GetSkillFactor(___m_shared.m_skillType)};");
+    }
+    /*
     public static float GetUpdatedHoldBowStaminaDrain(float weaponStaminaDrain, Player playerInst)
     {
         if (Player.m_localPlayer != null && (UnityEngine.Object)Player.m_localPlayer == (UnityEngine.Object)playerInst)
@@ -237,7 +251,7 @@ internal static class SkillPatches
                 }
             }
         }
-
+    
         BetterStaminaPlugin.DebugTranspilerLog($"");
         BetterStaminaPlugin.DebugTranspilerLog($"#############################################################");
         BetterStaminaPlugin.DebugTranspilerLog($"######## MODIFIED INSTRUCTIONS - {codes.Count} ########");
@@ -256,14 +270,14 @@ internal static class SkillPatches
 
         return codes;
     }
-
+    */
     public static float GetRunStaminaSkillFactor(float drainMax, float drainMin, float skillFactor, Player playerInst)
     {
         drainMin = BetterStaminaPlugin.runMaxSkillStaminaCost.Value;
 
         if (Player.m_localPlayer != null && (UnityEngine.Object)Player.m_localPlayer == (UnityEngine.Object)playerInst)
         {
-            if (playerInst.GetCurrentWeapon() != null)
+            if (playerInst.GetCurrentWeapon() != null && !playerInst.GetCurrentWeapon().Equals(playerInst.m_unarmedWeapon.m_itemData))
                 drainMin = BetterStaminaPlugin.runWithWeapMaxSkillStaminaCost.Value;
 
             EasingFunctions.Function easeFunc = EasingFunctions.GetEasingFunction(EasingFunctions.Ease.EaseOutSine);
@@ -348,7 +362,7 @@ internal static class SkillPatches
         return Mathf.Lerp(drainMax, drainMin, skillFactor);
     }
 
-    [HarmonyPatch(typeof(Player), "OnSwiming")]
+    [HarmonyPatch(typeof(Player), "OnSwimming")]
     [HarmonyTranspiler]
     static IEnumerable<CodeInstruction> OnSwimming_Transpiler(IEnumerable<CodeInstruction> instructions)
     {

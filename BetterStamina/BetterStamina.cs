@@ -20,9 +20,7 @@ namespace BetterStamina
         static public ConfigEntry<float> staminaRegenDelay;
 
         // Config - Tools
-        static public ConfigEntry<bool> removeHammerStaminaCost;
-        static public ConfigEntry<bool> removeCultivatorStaminaCost;
-        static public ConfigEntry<bool> removeHoeStaminaCost;
+        static public ConfigEntry<bool> removeToolStaminaCost;
 
         // Config - Skills
         static public ConfigEntry<float> runMaxSkillStaminaCost;
@@ -54,9 +52,7 @@ namespace BetterStamina
             staminaRegenDelay =                 Config.Bind("General",      "StaminaRegenDelay",            1f,     "Time in seconds before stamina starts regenerating. Default value - 1.");
             removeEncumberedStaminaDrain =      Config.Bind("General",      "RemoveEncumberedStaminaDrain", true,   "Prevents stamina drain while encumbered.");
 
-            removeHammerStaminaCost =           Config.Bind("Tools",        "RemoveHammerStaminaCost",      true,   "Repairing and constructing items will not consume stamina.");
-            removeHoeStaminaCost =              Config.Bind("Tools",        "RemoveHoeStaminaCost",         true,   "Using hoe will not consume stamina.");
-            removeCultivatorStaminaCost =       Config.Bind("Tools",        "RemoveCultivatorStaminaCost",  true,   "Using cultivator will not consume stamina.");
+            removeToolStaminaCost =             Config.Bind("Tools",        "RemoveToolStaminaCost",        true,   "Using tools to repair/build will not consume stamina.");
 
             runMaxSkillStaminaCost =            Config.Bind("Skills",       "RunCostAtMaxSkill",            0.4f,   "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
             runWithWeapMaxSkillStaminaCost =    Config.Bind("Skills",       "RunWithWeaponsCostAtMaxSkill", 0.5f,   "This will be used instead of RunCostModifierAtMaxSkill if player has weapons equipped. The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
