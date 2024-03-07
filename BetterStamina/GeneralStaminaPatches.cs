@@ -88,25 +88,4 @@ internal static class DebugStaminaPatches
             BetterStaminaPlugin.DebugLog($"UseStamina(): source - {new StackFrame(2).GetMethod().Name}; change - {___m_stamina - __state}");
         }
     }
-
-//     static private float previousStaminaRate = 0f;
-//     [HarmonyPatch(typeof(SE_Stats), "ModifyStaminaRegen")]
-//     [HarmonyPrefix]
-//     private static void ModifyStaminaRegen_Prefix(SE_Stats __instance, ref float staminaRegen, ref float __state)
-//     {
-//         __state = staminaRegen;
-//     }
-//     [HarmonyPatch(typeof(SE_Stats), "ModifyStaminaRegen")]
-//     [HarmonyPostfix]
-//     private static void ModifyStaminaRegen_Postfix(SE_Stats __instance, ref float staminaRegen, float __state)
-//     {
-//         if (__state != staminaRegen && previousStaminaRate != staminaRegen)
-//         {
-//             previousStaminaRate = staminaRegen;
-//             if (BetterStaminaPlugin.enableStaminaRegenLogging != null && BetterStaminaPlugin.enableStaminaRegenLogging.Value)
-//             {
-//                 BetterStaminaPlugin.DebugLog($"ModifyStaminaRegen(): source - {__instance.m_name}; new regen - {staminaRegen}; previous - {__state} multiplier - {__instance.m_staminaRegenMultiplier}");
-//             }
-//         }
-//     }
 }
