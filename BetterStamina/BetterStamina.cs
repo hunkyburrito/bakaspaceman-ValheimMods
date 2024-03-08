@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace BetterStamina
 {
-  [BepInPlugin("bakaSpaceman.BetterStamina", "Better Stamina", "2.0.0")]
+    [BepInPlugin("bakaSpaceman.BetterStamina", "Better Stamina - Updated", "2.1.0")]
     public class BetterStaminaPlugin : BepInPluginTemplate
     {
         // Config - Debug
@@ -46,34 +46,34 @@ namespace BetterStamina
 
         private void SetupConfig()
         {
-            nexusID =                           Config.Bind("General",      "NexusID",                      153,    "Nexus mod ID for updates");
-            staminaRegenRateMultiplier =        Config.Bind("General",      "StaminaRegenRateMod",          1.5f,   "1 - Default rate, 1.5 - 50% faster rate, 0.5 - 50% slower, etc.");
-            staminaRegenRateMultiplierWithWeapons = Config.Bind("General",  "StaminaRegenRateModWithWeapons", 1.4f, "This will be used instead of StaminaRegenRateMod if player has weapons equipped. 1 - Default rate, 1.5 - 50% faster rate, 0.5 - 50% slower, etc.");
-            staminaRegenDelay =                 Config.Bind("General",      "StaminaRegenDelay",            1f,     "Time in seconds before stamina starts regenerating. Default value - 1.");
-            removeEncumberedStaminaDrain =      Config.Bind("General",      "RemoveEncumberedStaminaDrain", true,   "Prevents stamina drain while encumbered.");
+            nexusID =                                   Config.Bind("General", "NexusID", 153, "Nexus mod ID for updates");
+            staminaRegenRateMultiplier =                Config.Bind("General", "StaminaRegenRateMod", 1.5f, "1 - Default rate, 1.5 - 50% faster rate, 0.5 - 50% slower, etc.");
+            staminaRegenRateMultiplierWithWeapons =     Config.Bind("General", "StaminaRegenRateModWithWeapons", 1.4f, "This will be used instead of StaminaRegenRateMod if player has weapons equipped. 1 - Default rate, 1.5 - 50% faster rate, 0.5 - 50% slower, etc.");
+            staminaRegenDelay =                         Config.Bind("General", "StaminaRegenDelay", 1f, "Time in seconds before stamina starts regenerating. Default value - 1.");
+            removeEncumberedStaminaDrain =              Config.Bind("General", "RemoveEncumberedStaminaDrain", true, "Prevents stamina drain while encumbered.");
 
-            removeToolStaminaCost =             Config.Bind("Tools",        "RemoveToolStaminaCost",        true,   "Using tools to repair/build will not consume stamina.");
+            removeToolStaminaCost =                     Config.Bind("Tools", "RemoveToolStaminaCost", true, "Using tools to repair/build will not consume stamina.");
 
-            runMaxSkillStaminaCost =            Config.Bind("Skills",       "RunCostAtMaxSkill",            0.4f,   "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            runWithWeapMaxSkillStaminaCost =    Config.Bind("Skills",       "RunWithWeaponsCostAtMaxSkill", 0.5f,   "This will be used instead of RunCostModifierAtMaxSkill if player has weapons equipped. The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            dodgeMaxSkillStaminaCost =          Config.Bind("Skills",       "DodgeCostAtMaxSkill",          0.67f,  "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            jumpMaxSkillStaminaCost =           Config.Bind("Skills",       "JumpCostAtMaxSkill",           0.67f,  "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            blockMaxSkillStaminaCost =          Config.Bind("Skills",       "BlockCostAtMaxSkill",          0.67f,  "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            sneakMaxSkillStaminaCost =          Config.Bind("Skills",       "SneakCostAtMaxSkill",          0.67f,  "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            weaponMaxSkillAttackStaminaCost =   Config.Bind("Skills",       "WeaponAttackCostAtMaxSkill",   0.67f,  "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            bowMaxSkillHoldStaminaCost =        Config.Bind("Skills",       "HoldBowCostAtMaxSkill",        0.67f,  "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
-            swimMaxStaminaCost =                Config.Bind("Skills",       "SwimCostAtMinSkill",           6f,     "Swimming stamina cost defined in units at minimum Swim skill.");
-            swimMinStaminaCost =                Config.Bind("Skills",       "SwimCostAtMaxSkill",           3f,     "Swimming stamina cost defined in units at maximum Swim skill.");
+            runMaxSkillStaminaCost =                    Config.Bind("Skills", "RunCostAtMaxSkill", 0.4f, "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            runWithWeapMaxSkillStaminaCost =            Config.Bind("Skills", "RunWithWeaponsCostAtMaxSkill", 0.5f, "This will be used instead of RunCostModifierAtMaxSkill if player has weapons equipped. The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            dodgeMaxSkillStaminaCost =                  Config.Bind("Skills", "DodgeCostAtMaxSkill", 0.67f, "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            jumpMaxSkillStaminaCost =                   Config.Bind("Skills", "JumpCostAtMaxSkill", 0.67f, "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            blockMaxSkillStaminaCost =                  Config.Bind("Skills", "BlockCostAtMaxSkill", 0.67f, "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            sneakMaxSkillStaminaCost =                  Config.Bind("Skills", "SneakCostAtMaxSkill", 0.67f, "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            weaponMaxSkillAttackStaminaCost =           Config.Bind("Skills", "WeaponAttackCostAtMaxSkill", 0.67f, "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            bowMaxSkillHoldStaminaCost =                Config.Bind("Skills", "HoldBowCostAtMaxSkill", 0.67f, "The value is a percentage modifier of the default cost. 1 - default cost, < 1 - reduced cost, > 1 - increased");
+            swimMaxStaminaCost =                        Config.Bind("Skills", "SwimCostAtMinSkill", 6f, "Swimming stamina cost defined in units at minimum Swim skill.");
+            swimMinStaminaCost =                        Config.Bind("Skills", "SwimCostAtMaxSkill", 3f, "Swimming stamina cost defined in units at maximum Swim skill.");
 
-            coldStaminaRegenMultiplier =        Config.Bind("Status Effects",   "ColdStaminaRegenModifier",         0.75f,  "Vanilla value - 0.75 (25% penalty)");
-            restedStaminaRegenMultiplier =      Config.Bind("Status Effects",   "RestedStaminaRegenModifier",       1.5f,   "Vanilla value - 2 (100% bonus)");
-            restedDurationPerComfortLvl =       Config.Bind("Status Effects",   "RestedDurationIncreasePerConfortLevel", 60f,   "This amount of seconds will be added to the effects duration per comfort level. Vanilla value - 60 seconds");
-            wetStaminaRegenMultiplier =         Config.Bind("Status Effects",   "WetStaminaRegenModifier",          0.85f,  "Vanilla value - 0.85 (15% penalty)");
+            coldStaminaRegenMultiplier =                Config.Bind("Status Effects", "ColdStaminaRegenModifier", 0.75f, "Vanilla value - 0.75 (25% penalty)");
+            restedStaminaRegenMultiplier =              Config.Bind("Status Effects", "RestedStaminaRegenModifier", 1.5f, "Vanilla value - 2 (100% bonus)");
+            restedDurationPerComfortLvl =               Config.Bind("Status Effects", "RestedDurationIncreasePerConfortLevel", 60f, "This amount of seconds will be added to the effects duration per comfort level. Vanilla value - 60 seconds");
+            wetStaminaRegenMultiplier =                 Config.Bind("Status Effects", "WetStaminaRegenModifier", 0.85f, "Vanilla value - 0.85 (15% penalty)");
 
 #if DEBUG
-            enableStaminaLogging =              Config.Bind("Debug",        "StaminaLogging",               false, "");
-            enableStaminaRegenLogging =         Config.Bind("Debug",        "StaminaRegenLogging",          false, "");
-            enableSkillStaminaLogging =         Config.Bind("Debug",        "SkillLogging",                 false, "");
+            enableStaminaLogging =                      Config.Bind("Debug", "StaminaLogging", false, "");
+            enableStaminaRegenLogging =                 Config.Bind("Debug", "StaminaRegenLogging", false, "");
+            enableSkillStaminaLogging =                 Config.Bind("Debug", "SkillLogging", false, "");
 #endif
         }
 
@@ -82,7 +82,7 @@ namespace BetterStamina
             base.Awake();
 
             SetupConfig();
-            
+
             if (enableLogging != null && enableLogging.Value)
             {
                 harmonyInst.PatchAll(typeof(DebugStaminaPatches));
