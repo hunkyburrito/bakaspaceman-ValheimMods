@@ -39,10 +39,9 @@ This mod rebalances the stamina system to make it a little bit more forgiving an
 ## Conflicts
 The mod might have issues with any other mod that modifies stamina.
 
-- Replaces `Attack.GetStaminaUsage()`.
-- Edits Player.`PlayerAttackInput()` via transpiler patch.
+- Replaces `Attack.GetAttackStamina()`.
 - Edits `Player.CheckRun()` via transpiler patch.
-- Edits `Player.OnSwiming()` via transpiler patch.
+- Edits `Player.OnSwimming()` via transpiler patch.
 
 ## Notes
 - You can disable/enable certain features and tweak all the mentioned values in the config file (it will appear only after you run the game with the mod at least once): **Valheim/BepInEx/config/bakaSpaceman.BetterStamina.cfg**.
@@ -50,6 +49,11 @@ The mod might have issues with any other mod that modifies stamina.
 - Or download [BepInEx Config Manger](https://github.com/BepInEx/BepInEx.ConfigurationManager/releases)﻿ plugin to be able to edit them in-game by pressing F1.
 
 ## Change Log
+### 2.1.0
+- Updated fixes for Hildirs Request
+- Combined tool stamina usage to one toggle
+### 2.0.0
+- Updated fixes for Mistland (thanks to Digitalroot)
 ### 1.2.0
 - Reduced Rested stamina regen bonus from 100% to 50% and increased base stamina regen rate by 50%, to reduce the overall impact and importance of having Rested status effect.
 - Added ability to override Cold, Wet and Rested status effect stamina regen rates via config file.

@@ -1,8 +1,8 @@
 {
-  "name": "Better_Stamina",
+  "name": "Better_Stamina - Hildirs Request Update",
   "description": "Rebalances stamina system to make it more forgiving and improve the combat flow.",
-  "version_number": "1.2.0",
-  "website_url": "https://github.com/bakaspaceman/ValheimMods",
+  "version_number": "2.1.0",
+  "website_url": "https://github.com/hunkyburrito/bakaspaceman-ValheimMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.603"
   ]
