@@ -170,17 +170,17 @@ internal static class SkillPatches
     }
     [HarmonyPatch(typeof(ItemDrop.ItemData), "GetDrawStaminaDrain")]
     [HarmonyPostfix]
-    private static void GetDrawStaminaDrain_Postfix(Player __instance, ItemDrop.ItemData.SharedData ___m_shared , ref float __result)
+    private static void GetDrawStaminaDrain_Postfix(ItemDrop.ItemData.SharedData ___m_shared , ref float __result)
     {
         float weaponStaminaDrain =  ___m_shared.m_attack.m_drawStaminaDrain;
         EasingFunctions.Function easeFunc = EasingFunctions.GetEasingFunction(EasingFunctions.Ease.EaseOutSine);
-        float interpFactor = easeFunc(1f, BetterStaminaPlugin.bowMaxSkillHoldStaminaCost.Value, __instance.GetSkillFactor(___m_shared.m_skillType));
+        float interpFactor = easeFunc(1f, BetterStaminaPlugin.bowMaxSkillHoldStaminaCost.Value, Player.m_localPlayer.GetSkillFactor(___m_shared.m_skillType));
         float newWeaponStaminaDrain = weaponStaminaDrain * interpFactor;
         
         __result = newWeaponStaminaDrain;
         
         if (BetterStaminaPlugin.enableSkillStaminaLogging != null && BetterStaminaPlugin.enableSkillStaminaLogging.Value)
-            BetterStaminaPlugin.DebugLog($"BowHoldStamina: Usage change: {weaponStaminaDrain} - {newWeaponStaminaDrain}; Mathf.Lerp: {Mathf.Lerp(1f, BetterStaminaPlugin.bowMaxSkillHoldStaminaCost.Value, __instance.GetSkillFactor(___m_shared.m_skillType))}; Custom: {interpFactor}; skill: {__instance.GetSkillFactor(___m_shared.m_skillType)};");
+            BetterStaminaPlugin.DebugLog($"BowHoldStamina: Usage change: {weaponStaminaDrain} - {newWeaponStaminaDrain}; Mathf.Lerp: {Mathf.Lerp(1f, BetterStaminaPlugin.bowMaxSkillHoldStaminaCost.Value, Player.m_localPlayer.GetSkillFactor(___m_shared.m_skillType))}; Custom: {interpFactor}; skill: {Player.m_localPlayer.GetSkillFactor(___m_shared.m_skillType)};");
     }
 
     public static float GetRunStaminaSkillFactor(float drainMax, float drainMin, float skillFactor, Player playerInst)
